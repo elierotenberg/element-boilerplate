@@ -1,4 +1,23 @@
-<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+A Polymer/WebComponent wrapper of WebSocket client
+
+Example:
+
+    <x-websocket auto url="ws://echo.websocket.org"></x-websocket>
+
+		<script>
+
+			var xws = document.querySelector("x-websocket");
+
+			xws.addEventListener("open", function(event) {
+				console.log("websocket connection open!");
+			});
+
+		</script>
+@demo
+-->
 <dom-module id="x-websocket">
 	<style>
 		:host {
@@ -14,6 +33,23 @@
 		XWebsocket = Polymer({
 
 			is: 'x-websocket',
+
+			/**
+				 * WebSocket open event
+				 *
+				 * @event open
+				 */
+			/**
+		     * Fired when a error occurs.
+		     *
+		     * @event error
+		     */
+		    /**
+		     * Fired when a message is received.
+		     *
+		     * @event message
+		     */
+
 
 			properties: {
 				url: {
@@ -121,7 +157,7 @@
 					return -1;
 				}
 			},
-			
+
 			/**
 			 * {{url}} change handler.
 			 * @private

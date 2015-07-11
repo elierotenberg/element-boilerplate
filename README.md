@@ -23,7 +23,7 @@
 3. Import Custom Element:
 
     ```html
-    <link rel="import" href="bower_components/x-websocket/dist/x-websocket.html">
+    <link rel="import" href="bower_components/x-websocket/x-websocket.html">
     ```
 
 4. Start using it!

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+    <head>
+
+        <title>WebSocket Example</title>
+
+        <!-- Importing Web Component's Polyfill -->
+        <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+
+  
+
+        <!-- Importing Custom Elements -->
+        <link rel="import" href="../x-websocket.html">
+        <style type="text/css">
+            <![CDATA[ input#chat {
+                width: 410px
+            }
+            
+            #console-container {
+                width: 400px;
+            }
+            
+            #console {
+                border: 1px solid #CCCCCC;
+                border-right-color: #999999;
+                border-bottom-color: #999999;
+                height: 170px;
+                overflow-y: scroll;
+                padding: 5px;
+                width: 100%;
+            }
+            
+            #console p {
+                padding: 0;
+                margin: 0;
+                color: blue;
+            }
+            
+            ]]>
+        </style>
+
+    </head>
+
+    <body>
+        <!-- <div class="noscript"><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets rely on Javascript being enabled. Please enable
+    Javascript and reload this page!</h2></div> -->
+
+
+        <!-- Using Custom Elements -->
+        <x-websocket auto url="ws://localhost:8080/events"></x-websocket>
+
+        <div>
+            <p>
+                <input type="text" placeholder="type and press enter to chat" id="ws" />
+            </p>
+            <div id="console-container">
+                <div id="console" />
+            </div>
+        </div>
+        <script>
+            var xws = document.querySelector("x-websocket"),
+                Console = {},
+                Chat = {};
+            Console.log = (function(message) {
+                var console = document.getElementById('console');
+                var p = document.createElement('p');
+                p.style.wordWrap = 'break-word';
+                p.innerHTML = message;
+                console.appendChild(p);
+                while (console.childNodes.length > 25) {
+                    console.removeChild(console.firstChild);
+                }
+                console.scrollTop = console.scrollHeight;
+            });
+
+            Chat.sendMessage = (function() {
+                var message = document.getElementById('ws').value;
+                if (message != '') {
+                    xws.send(message);
+                    document.getElementById('ws').value = '';
+                }
+            });
+            console.log("xws:", xws);
+
+
+            xws.addEventListener('open', function() {
+                Console.log('Info: WebSocket connection opened.');
+                //xws.send("");
+
+                document.getElementById('ws').onkeydown = function(event) {
+                    if (event.keyCode == 13) {
+                        Chat.sendMessage();
+                    }
+                };
+            });
+            xws.addEventListener('message', function(e) {
+                Console.log('Message ' + e.detail.data);
+            });
+            xws.addEventListener('error', function() {
+                Console.log('error');
+            });
+            window.addEventListener('WebComponentsReady', function(e) {
+                // if not use "auto" property on x-websocket, then open manually with:
+                // xws.open();
+            });
+        </script>
+    </body>
+
+    </html>

@@ -11,19 +11,19 @@
 1. Install the component using [Bower](http://bower.io/):
 
     ```sh
-    $ bower install x-websocket --save
+    $ bower install mdrmtz/x-websocket --save
     ```
 
 2. Import Web Components' polyfill:
 
     ```html
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
     ```
 
 3. Import Custom Element:
 
     ```html
-    <link rel="import" href="bower_components/x-websocket/dist/x-websocket.html">
+    <link rel="import" href="../x-websocket/x-websocket.html">
     ```
 
 4. Start using it!
